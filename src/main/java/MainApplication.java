@@ -170,6 +170,8 @@ public class MainApplication {
                     row.put("column1", value);
 
                     //Send record to snowflake
+                    //The insertRow() function requires a Map and a nullable string offset token for monitoring or debugging purposes
+                    //here we have used the kafka consumer's record offset as the offset token
                     InsertValidationResponse response = channel1.insertRow(row, String.valueOf(record.offset()));
                     if (response.hasErrors()) {
                         System.out.println("Error occurred pushing to snowflake >>> " + response.getInsertErrors().get(0).getException());
