@@ -161,17 +161,13 @@ public class MainApplication {
                     System.out.println("CONSUMER METADATA >>> Key: " + record.key() + ", Value: " + record.value() + " Partition: " + record.partition() + ", Offset:" + record.offset());
 
                     //assign consumer record to a variable for transformation if need be
-                    String outputRecord = record.value();
-
-                    String [] msisdn = outputRecord.split(",");
-                    String mobile = msisdn[0].substring(msisdn[0].lastIndexOf(":") + 1);
+                    String value = record.value();
 
                     Map<String, Object> row = new HashMap<>();
 
                     //populate map "row" with key/value pairs
                     //keys are snowflake table column names, values are to be inserted into the column for that key
-                    row.put("mobile", mobile);
-                    row.put("operator", msisdn[1]);
+                    row.put("column1", value);
 
                     //Send record to snowflake
                     InsertValidationResponse response = channel1.insertRow(row, String.valueOf(record.offset()));
